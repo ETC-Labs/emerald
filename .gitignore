@@ -13,3 +13,6 @@ emerald-wallet
 emerald-explorer
 emerald-tool
 solc.js
+geth
+geth.exe
+multi-geth-*

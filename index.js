@@ -2,16 +2,18 @@
 const prog = require('caporal');
 const path = require('path');
 const rimraf = require('rimraf');
-const migrate = require('truffle-core/lib/commands/migrate');
 const shell = require('shelljs');
+const IPFSFactory = require('ipfsd-ctl')
+
 const os = require('os');
+const ipfsAPI = require('ipfs-api');
 const compileSolidityCwd = require('./emerald-solidity');
 const ora = require('ora');
 const opn = require('opn');
 const tmp = require('tmp');
 const EmeraldJs = require('emerald-js');
 const Wallet = EmeraldJs.Wallet;
-const ghdownload = require('github-download')
+const ghdownload = require('github-download');
 const { JsonRpc, HttpTransport, Vault, VaultJsonRpcProvider } = require('emerald-js');
 const platform = os.platform();
 const { EmeraldDeployer } = require('./emerald-contract');
@@ -137,7 +139,28 @@ prog
     });
   })
 
-  .command('deploy', 'Deploy solidity to network')
+  .command('ipfs', 'Run ipfs')
+  .action(async (args, options, logger) => {
+    return shell.exec(`${__dirname}/node_modules/.bin/jsipfs daemon`, {async: true});
+  })
+
+  .command('deploy ipfs', 'Deploy to ipfs')
+  .option('--path', 'path to deploy')
+  .action(async (args, options, logger) => {
+    const ipfs = ipfsAPI('localhost', '5002', {protocol: 'http'});
+    ipfs.util.addFromFs(path.resolve(process.cwd(), options.path || 'build/app'), { recursive: true }, (err, results) => {
+      if (err) {
+        return logger.error(err);
+      }
+      logger.info('Deployed the following files to IPFS:', results);
+      logger.info('\n');
+      logger.info('You can view them here:\n');
+      logger.info('Local: ', `http://localhost:9090/ipfs/${results[results.length - 1].hash}`);
+      logger.info('Public Gateway: ', `http://gateway.ipfs.io/ipfs/${results[results.length - 1].hash}`);
+    });
+  })
+
+  .command('deploy contract', 'Deploy solidity to network')
   .action((args, options, logger) => {
     const files = shell.ls(`${process.cwd()}/build/contracts/**/*.json`).concat([]);
 
@@ -168,6 +191,26 @@ prog
 
       process.exit(0);
     });
+  })
+
+
+  .command('multi-geth', 'Run multi-geth')
+  .option('--classic', 'Ethereum Classic network: pre-configured Ethereum Classic mainnet')
+  .option('--eth', 'Ethereum network: pre-configured Ethereum mainnet')
+  .action((args, options, logger) => {
+    console.log('options', options);
+    let execArgs = ' --syncmode=fast --rpc --rpcport 8545 --rpcaddr 127.0.0.1 --rpccorsdomain="*" --rpcapi "eth,web3,net"';
+    if (options.classic || !options.eth) {
+      execArgs += ' --classic';
+    }
+    switch (platform) {
+    case 'darwin':
+      return shell.exec(`${__dirname}/geth${execArgs}`);
+    case 'linux':
+      return shell.exec(`${__dirname}/geth${execArgs}`);
+    case 'win32':
+      return shell.exec(`${__dirname}/geth.exe${execArgs}`);
+    }
   })
 
 prog.parse(process.argv);
