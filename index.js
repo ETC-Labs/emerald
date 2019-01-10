@@ -44,7 +44,7 @@ const commands = {
 }
 
 prog
-  .version('0.0.2')
+  .version('0.0.3')
 
   .command('new', 'Create a new project')
   .action((args, options, logger) => {
