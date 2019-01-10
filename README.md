@@ -8,8 +8,12 @@ npm install -g https://github.com/ETCDEVTeam/emerald.git
 ```
 
 
+## Help:
 
-### Usage:
+```
+emerald --help
+```
+
 
 ```
    USAGE
@@ -18,12 +22,17 @@ npm install -g https://github.com/ETCDEVTeam/emerald.git
 
    COMMANDS
 
-     new                 Create a new project
-     wallet              Boot Emerald Wallet
-     explorer            Boot Explorer
-     testrpc             Run testnet for ethereum classic
-     deploy              Deploy solidity to network
-     help <command>      Display help for a specific command
+     new                       Create a new project
+     vault                     Run emerald vault
+     testrpc [passphrase]      Run testnet for ethereum classic
+     wallet                    Boot Emerald Wallet
+     explorer                  Boot Explorer
+     compile                   Compile solidity
+     ipfs                      Run ipfs
+     deploy ipfs               Deploy to ipfs
+     deploy contract           Deploy solidity to network
+     multi-geth                Run multi-geth
+     help <command>            Display help for a specific command
 
    GLOBAL OPTIONS
 
@@ -33,3 +42,4 @@ npm install -g https://github.com/ETCDEVTeam/emerald.git
      --quiet            Quiet mode - only displays warn and error messages
      -v, --verbose      Verbose mode - will also output debug messages
 ```
+
