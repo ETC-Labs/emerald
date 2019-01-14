@@ -4,7 +4,7 @@
 ### Installation:
 
 ```
-npm install -g https://github.com/ETCDEVTeam/emerald.git
+npm install -g @etclabscore/emerald
 ```
 
 
