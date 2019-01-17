@@ -10,18 +10,19 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "clean": "rimraf emerald-explorer EmeraldWallet.app EmeraldWallet.dmg svmdev EmeraldWallet.AppImage EmeraldWallet.exe solc.js emerald-vault geth",
-    "postinstall": "npm run clean && node downloaders/sputnikvm-dev.js && node downloaders/emerald-wallet.js && node downloaders/emerald-explorer.js && node downloaders/solc-downloader.js && node downloaders/emerald-vault node downloaders/multi-geth.js"
+    "postinstall": "npm run clean && node downloaders/sputnikvm-dev.js && node downloaders/emerald-wallet.js && node downloaders/solc-downloader.js && node downloaders/emerald-vault node downloaders/multi-geth.js"
   },
   "bin": {
     "emerald": "./index.js"
   },
   "author": "Shane Jonas",
   "dependencies": {
+    "@etclabscore/jade-explorer": "^1.0.1",
     "async": "^2.6.1",
     "caporal": "^1.1.0",
     "dmg": "^0.1.0",
     "download-github-release": "^0.3.2",
-    "emerald-js": "https://github.com/ETCDEVTeam/emerald-js.git",
+    "emerald-js": "https://github.com/ETCDEVTeam/emerald-js.git#4470dd2550f539343db11518d61f86e2493a5024",
     "github-download": "^0.5.0",
     "ipfs": "^0.33.1",
     "ipfs-api": "^26.1.2",

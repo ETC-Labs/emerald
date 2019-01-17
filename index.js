@@ -126,9 +126,7 @@ prog
 
   .command('explorer', 'Boot Explorer')
   .action((args, options, logger) => {
-    shell.cd(`${__dirname}/emerald-explorer`);
-    shell.exec(`${__dirname}/node_modules/.bin/lerna run --stream start --scope emerald-tool-browser --include-filtered-dependencies`);
-    opn('http://localhost:3000/blocks');
+    opn(`${__dirname}/node_modules/@etclabscore/jade-explorer/build/app/index.html`);
   })
 
   .command('compile', 'Compile solidity')
