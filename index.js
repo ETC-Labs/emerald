@@ -199,7 +199,7 @@ prog
   .option('--eth', 'Ethereum network: pre-configured Ethereum mainnet')
   .action((args, options, logger) => {
     console.log('options', options);
-    let execArgs = ' --syncmode=fast --rpc --rpcport 8545 --rpcaddr 127.0.0.1 --rpccorsdomain="*" --rpcapi "eth,web3,net"';
+    let execArgs = ' --syncmode=fast --rpc --rpcport 8545 --rpcaddr 127.0.0.1 --rpccorsdomain="localhost" --rpcapi "eth,web3,net"';
     if (options.classic || !options.eth) {
       execArgs += ' --classic';
     }
